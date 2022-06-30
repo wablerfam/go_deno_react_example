@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { tw } from "twind";
 
 import { User } from "./types.ts";
 
@@ -18,7 +19,7 @@ function Home() {
 
   return (
     <div>
-      <p>Hello. {data[0].name}</p>
+      <p className={tw`text-red-500`}>Hello. {data[0].name}</p>
     </div>
   );
 }
