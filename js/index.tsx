@@ -3,15 +3,13 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { tw } from "twind";
 
-import { User } from "./types.ts";
-
-const fetchUsers = async () => {
-  const res = await fetch("/users");
-  return res.json();
-};
+import { User } from "./model.ts";
 
 function Home() {
-  const { data } = useQuery<User[], Error>("users", fetchUsers);
+  const { data } = useQuery<User[], Error>("users", async () => {
+    const res = await fetch("/users");
+    return res.json();
+  });
 
   if (!data) {
     return <div>not found</div>;
