@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "esbuild": "https://deno.land/x/esbuild@v0.14.47/mod.js",
+    "esbuild_deno_loader": "https://deno.land/x/esbuild_deno_loader@0.5.0/mod.ts",
+    "fs/": "https://deno.land/std@0.145.0/fs/",
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-query": "https://esm.sh/react-query@3.39.1",
+    "twind": "https://esm.sh/twind@0.16.17"
+  }
+}

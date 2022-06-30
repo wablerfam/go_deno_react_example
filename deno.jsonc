@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext", "dom", "deno.ns"]
+  },
+  "importMap": "import_map.json",
+  "lint": {
+    "files": {
+      "include": [],
+      "exclude": []
+    },
+    "rules": {}
+  },
+  "fmt": {
+    "files": {
+      "include": [],
+      "exclude": []
+    },
+    "options": {
+      "lineWidth": 120
+    }
+  },
+  "tasks": {
+    "build": "deno run -A tools/build.ts",
+    "dev": "export WATCH=true && deno run -A tools/build.ts & deno run -A --watch main.ts",
+    "lint": "deno lint",
+    "migrate": "deno run -A tools/migrate.ts",
+    "tygo": "tygo generate"
+  }
+}

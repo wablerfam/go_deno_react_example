@@ -1,0 +1,3 @@
+packages:
+  - path: "go_deno_react_example/go/model"
+    output_path: "js/types.ts"
