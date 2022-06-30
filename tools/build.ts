@@ -1,9 +1,12 @@
-import { copySync } from "fs/copy.ts";
 import * as esbuild from "esbuild";
 import { denoPlugin } from "esbuild_deno_loader";
+import { copySync } from "fs/copy.ts";
+import { ensureDirSync } from "fs/mod.ts";
 
-// Copy index.html
-copySync("public/index.html", "dist/index.html", { overwrite: true });
+ensureDirSync("dist");
+
+// Copy Public
+copySync("public/", "dist", { overwrite: true });
 
 // ESBuild
 const importMapURL = new URL("../import_map.json", import.meta.url);
