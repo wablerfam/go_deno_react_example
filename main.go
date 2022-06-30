@@ -2,56 +2,24 @@ package main
 
 import (
 	"embed"
-	"errors"
-	"io"
-	"mime"
 	"net/http"
-	"path"
-	"path/filepath"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 
 	"go_deno_react_example/go/model"
 )
 
 //go:embed dist
-var bundle embed.FS
-
-func readStaticFiles(fs embed.FS, prefix, requestedPath string, w http.ResponseWriter) error {
-	f, err := fs.Open(path.Join(prefix, requestedPath))
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	stat, _ := f.Stat()
-	if stat.IsDir() {
-		return errors.New("path is dir")
-	}
-
-	contentType := mime.TypeByExtension(filepath.Ext(requestedPath))
-	w.Header().Set("Content-Type", contentType)
-	_, err = io.Copy(w, f)
-	return err
-}
-
-func Handler(bundle embed.FS) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		err := readStaticFiles(bundle, "dist", c.Request().URL.Path, c.Response())
-		if err == nil {
-			return err
-		}
-		err = readStaticFiles(bundle, "dist", "index.html", c.Response())
-		if err != nil {
-			return err
-		}
-		return nil
-	}
-}
+var dist embed.FS
 
 func main() {
 	e := echo.New()
-	e.GET("*", Handler(bundle))
+	e.Use(middleware.StaticWithConfig(middleware.StaticConfig{
+		Root:       "dist",
+		Filesystem: http.FS(dist),
+	}))
+
 	e.GET("/users", func(c echo.Context) error {
 		var users []*model.User
 		user := &model.User{
